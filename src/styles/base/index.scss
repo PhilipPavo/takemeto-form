@@ -1,0 +1,10 @@
+@import 'grid-generator';
+@import 'constants';
+
+@include gridGenerator(
+  12,
+  (0, 480px, 800px),
+  (s-,m-,l-),
+  'px',
+  $spaceUnits: (.5em,1em,2em)
+);

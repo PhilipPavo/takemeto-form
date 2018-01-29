@@ -1,0 +1,46 @@
+.auto-list {
+  margin-top: $header-height;
+
+  & .auto-item {
+    padding: 12px;
+    & .image {
+      height: 200px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      margin-bottom: $base-offset;
+    }
+
+    & .title {
+      margin-bottom: $base-offset;
+
+      & small{
+        color: lighten(black, 50%)
+      }
+    }
+
+    & .description {
+      margin-bottom: $base-offset;
+    }
+
+    & .options{
+      display: flex;
+      justify-content: space-evenly;
+      margin-bottom: $base-offset;
+
+      &-option{
+        flex-basis: 1px;
+      }
+    }
+
+    & .price{
+      margin-bottom: $base-offset;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    & .actions{
+      text-align: center;
+    }
+  }
+}

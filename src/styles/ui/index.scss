@@ -1,0 +1,53 @@
+$base-offset: 16px;
+.pt-transition-container{
+  z-index: 22;
+}
+label.pt-label{
+  margin: 0;
+}
+select[name="city_from"], select[name="city_to"]{
+  font-size: 15px;
+  height: 45px;
+  line-height: 17px;
+  padding: 10px 15px 10px 15px;
+  background-color: #fff;
+  margin: $base-offset / 1.5 0;
+  width: 100%;
+  background-position: 5px center;
+  background-repeat: no-repeat;
+  border: 1px solid #c6cbcf;
+  border-radius: 3px;
+  color: #262626;
+  display: block;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+input[name="date_range"]{
+  font-size: 15px;
+  height: 45px;
+  line-height: 17px;
+  padding: 10px 15px 10px 15px;
+  background-color: #fff;
+  width: 100%;
+  margin: $base-offset / 1.5 0;
+}
+
+.time-picker-container{
+  text-align: center;
+
+  & .pt-timepicker{
+    padding: 0;
+
+    & .pt-timepicker-input{
+      font-size: 15px;
+    }
+  }
+}
+
+.options-container{
+  & .pt-switch{
+    margin: $base-offset * 1.5 0;
+  }
+}
