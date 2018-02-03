@@ -1,0 +1,31 @@
+.customer-dialog{
+  background: #fff;
+
+  .pt-dialog-header{
+    h5{
+      font: 300 18px/24px pfhighway,Helvetica,Arial,sans-serif;
+    }
+  }
+
+  .pt-dialog-body{
+
+  }
+
+  .pt-dialog-footer{
+    button{
+      height: 38px;
+      background: none;
+      border: none;
+      border-radius: 4px;
+      box-shadow: none;
+      background-color: $color-yellow;
+
+      &:hover{
+        background-color: $color-yellow;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        color: #333;
+        text-decoration: none;
+      }
+    }
+  }
+}

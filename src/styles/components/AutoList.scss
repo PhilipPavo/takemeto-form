@@ -30,6 +30,19 @@
 
       &-option{
         flex-basis: 1px;
+
+        button{
+          background: none;
+          background-color: #fcfdfd;
+          border-color: #d5dde9;
+          color: #91989E;
+          border-radius: 4px;
+          &:hover{
+            background-color: $color-yellow;
+            border-color: $color-yellow;
+            color: #333;
+          }
+        }
       }
     }
 
@@ -41,6 +54,21 @@
 
     & .actions{
       text-align: center;
+
+      button{
+        height: 42px;
+        background: none;
+        border: none;
+        border-radius: 4px;
+        box-shadow: none;
+        background-color: $color-yellow;
+
+        &:hover{
+          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+          color: #333;
+          text-decoration: none;
+        }
+      }
     }
   }
 }

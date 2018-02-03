@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {OrderForm, AutoList} from '../components/index';
+import {OrderForm, AutoList, CustomerDialog} from '../components/index';
 import { getFormValues } from 'redux-form';
 import {connect} from 'react-redux';
 import {ORDER_OPTIONS_ENUM} from "../data";
@@ -8,7 +8,9 @@ import moment from 'moment';
 class OrderPage extends Component {
     state: {
         basicPrice: number,
-        days: number
+        days: number,
+        isOpenCustomerDialog: boolean,
+        selectedAuto: Object
     }
 
     constructor(props){
@@ -16,7 +18,9 @@ class OrderPage extends Component {
 
         this.state = {
             basicPrice: 0,
-            days: 0
+            days: 0,
+            isOpenCustomerDialog: false,
+            selectedAuto: null
         }
     }
 
@@ -60,19 +64,48 @@ class OrderPage extends Component {
         this.onFormChange(nextProps.formValues)
     }
 
+    onSelectAuto(auto){
+        this.setState({
+            isOpenCustomerDialog: true,
+            selectedAuto: auto
+        })
+    }
+
+    onCloseCustomerDialog(){
+        this.setState({
+            isOpenCustomerDialog: false
+        })
+    }
+
+    onSubmitCustomer(customer){
+        let order = {
+            customer,
+            ...this.props.formValues,
+            auto: this.state.selectedAuto
+        }
+
+        this.sendOrder(order);
+    }
+
     render() {
         return (
-            <div>
-                <div className={'order-container grid-3 s-grid-12 pad-3'}>
-                    <OrderForm
-                        onSubmit={(values) => this.sendOrder(values)}
-                        initialValues={this.initialFormValues}/>
+            <React.Fragment>
+                <CustomerDialog
+                    onSubmitCustomer={(values) => this.onSubmitCustomer(values)}
+                    isOpen={this.state.isOpenCustomerDialog}
+                    onClose={() => this.onCloseCustomerDialog()}/>
+
+                <div>
+                    <div className={'order-container grid-3 s-grid-12 pad-3'}>
+                        <OrderForm
+                            initialValues={this.initialFormValues}/>
+                    </div>
+                    <div className="grid-3 s-grid-12 pad-3"/>
+                    <div className="grid-9 s-grid-12 pad-3">
+                        <AutoList onSelectAuto={(auto) => this.onSelectAuto(auto)} {...this.state}/>
+                    </div>
                 </div>
-                <div className="grid-3 s-grid-12 pad-3"/>
-                <div className="grid-9 s-grid-12 pad-3">
-                    <AutoList {...this.state}/>
-                </div>
-            </div>
+            </React.Fragment>
         );
     }
 }

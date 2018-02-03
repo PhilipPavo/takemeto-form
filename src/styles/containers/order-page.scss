@@ -4,4 +4,14 @@
   position: fixed;
   margin-top: $header-height;
   z-index: 21;
+
+  .pt-popover-target.daterange-popover{
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .order-container{
+    position: relative;
+  }
 }

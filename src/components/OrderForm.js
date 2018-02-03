@@ -27,7 +27,7 @@ class OrderForm extends Component {
     render() {
         return (
             <form onSubmit={this.props.handleSubmit}>
-                <span>Информация о заказе</span>
+                <h2>Информация о заказе</h2>
                 <hr/>
                 <Field label={'Выберите аэропорт'} name={'city_from'} options={CitiesValues} component={FieldSelect}/>
                 <Field label={'Место возврата'} name={'city_to'} options={CitiesValues} component={FieldSelect}/>
@@ -42,7 +42,7 @@ class OrderForm extends Component {
 
                 {this.renderOptions().map((field, index) => {
                     return(
-                        <div key={index} className="grid-6 options-container">
+                        <div key={index} className="grid-6 s-grid-6 m-grid-12 options-container">
                             {field}
                         </div>
                     );

@@ -55,7 +55,7 @@ class AutoItem extends Component {
                     {this.state.price} € / день
                 </div>
                 <div className={'actions'}>
-                    <Button intent={'warning'}>Забронировать</Button>
+                    <Button onClick={this.props.onSelect} intent={'warning'}>Забронировать</Button>
                 </div>
             </div>
         )
@@ -76,18 +76,8 @@ class AutoList extends Component {
     }
 
     loadAutos(){
-        const auto = AUTOS_LIST[0];
-
-        const autos = [];
-        autos.push(auto);
-        autos.push(auto);
-        autos.push(auto);
-        autos.push(auto);
-        autos.push(auto);
-        autos.push(auto);
-        autos.push(auto);
         this.setState({
-            autos
+            autos: AUTOS_LIST
         })
     }
 
@@ -98,12 +88,12 @@ class AutoList extends Component {
     render() {
         return (
             <div className={'auto-list'}>
-                <span>Выберите тип автомобиля</span>
+                <h2>Выберите тип автомобиля</h2>
                 <hr/>
                 {this.state.autos.map((auto, index) => {
                     return (
-                        <div key={index} className={'grid-3 m-grid-6 s-grid-12'}>
-                            <AutoItem {...this.props} {...auto}/>
+                        <div key={index} className={'grid-3 m-grid-6 s-grid-6'}>
+                            <AutoItem {...this.props} {...auto} onSelect={() => this.props.onSelectAuto(auto)}/>
                         </div>
                     )
                 })}

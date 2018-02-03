@@ -3,6 +3,51 @@ import { DateRangeInput, DateRangePicker, TimePicker} from "@blueprintjs/datetim
 import { Switch } from "@blueprintjs/core";
 import FieldDateTimeRangePicker from './FieldDateTimeRangePicker';
 
+class FieldInput extends Component{
+    render(){
+        const {label, placeholder, type, input, meta: { touched, error, warning}} = this.props;
+
+        const inputProps = {
+            placeholder: placeholder || label,
+            type,
+            ...input
+        };
+
+        let className = ['pt-large', 'pt-fill', 'pt-input'];
+        let intent = '';
+        let infoText = '';
+
+        if(touched){
+            if(error){
+                intent = 'pt-intent-danger';
+            }
+
+            if(warning){
+                intent = 'pt-intent-warning';
+            }
+
+            infoText = error || warning;
+        }
+
+        className.push(intent);
+
+        return (
+            <div className={`pt-form-group ${intent}`}>
+                <label
+                    className={'pt-label'}
+                    htmlFor={input.name}>
+                    {label}
+                    <input type={'text'} {...inputProps} id={input.name} className={className.join(' ')}/>
+                </label>
+                {touched && (
+                    <div className={'pt-form-helper-text'}>{infoText}</div>
+                )}
+            </div>
+
+        );
+    }
+}
+
 class FieldSelect extends Component{
     render(){
         const {label, input, options} = this.props;
@@ -73,6 +118,7 @@ class FieldTimePicker extends Component{
 }
 
 export {
+    FieldInput,
     FieldSelect,
     FieldDateRangePicker,
     FieldSwitch,
