@@ -19,6 +19,7 @@ class AutoItem extends Component {
         let price = nextProps.price;
 
         price += nextProps.basicPrice;
+        price *= nextProps.days;
 
         this.setState({
             price
