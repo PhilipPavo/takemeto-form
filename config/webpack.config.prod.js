@@ -46,6 +46,12 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
     { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
+
+const extractSass = new ExtractTextPlugin({
+    filename: "[name].[contenthash].css",
+    disable: process.env.NODE_ENV === "development"
+});
+
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
@@ -102,6 +108,7 @@ module.exports = {
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+      extractSass
     ],
   },
   module: {
@@ -152,6 +159,19 @@ module.exports = {
               
               compact: true,
             },
+          },
+
+          {
+              test: /\.scss$/,
+              use: extractSass.extract({
+                  use: [{
+                      loader: "css-loader"
+                  }, {
+                      loader: "sass-loader"
+                  }],
+                  // use style-loader in development
+                  fallback: "style-loader"
+              })
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
