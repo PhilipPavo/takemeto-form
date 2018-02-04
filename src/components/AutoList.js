@@ -53,7 +53,7 @@ class AutoItem extends Component {
                 </div>
                 <div className={'price'}>
 
-                    {this.state.price} € / день
+                    {this.state.price} € / {this.props.days == 1 ? 'день' : `${this.props.days} дней` }
                 </div>
                 <div className={'actions'}>
                     <Button onClick={this.props.onSelect} intent={'warning'}>Забронировать</Button>
