@@ -3,6 +3,10 @@ import {Dialog, Button} from '@blueprintjs/core';
 import CustomerForm from './CustomerForm';
 
 class CustomerDialog extends Component {
+    initialCustomerValues = {
+        description: ''
+    };
+
     render() {
         return (
             <div>
@@ -14,7 +18,7 @@ class CustomerDialog extends Component {
                     title="Контактная информация">
 
                     <div className="pt-dialog-body">
-                        <CustomerForm onSubmit={this.props.onSubmitCustomer}/>
+                        <CustomerForm onSubmit={this.props.onSubmitCustomer} initialValues={this.initialCustomerValues}/>
                     </div>
                     <div className="pt-dialog-footer">
                         <div className="pt-dialog-footer-actions">

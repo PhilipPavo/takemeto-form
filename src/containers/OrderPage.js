@@ -4,6 +4,7 @@ import { getFormValues } from 'redux-form';
 import {connect} from 'react-redux';
 import {ORDER_OPTIONS_ENUM} from "../data";
 import moment from 'moment';
+import Ajax from '../utils/Ajax';
 
 class OrderPage extends Component {
     state: {
@@ -25,11 +26,15 @@ class OrderPage extends Component {
     }
 
     initialFormValues = {
-        city_from: 1,
-        city_to: 1,
+        city_from: '1',
+        city_to: '1',
         date_range: {from: new Date(), to: new Date()},
-        time_to: null,
-        time_from: null
+        time_to: new Date(),
+        time_from: new Date(),
+        option_gps: false,
+        option_child_buster: false,
+        option_child_chair: false,
+        option_wifi: false
     };
 
     onFormChange(values){
@@ -56,8 +61,14 @@ class OrderPage extends Component {
         });
     }
 
-    sendOrder(values){
-        console.log(values);
+    sendOrder(order){
+        Ajax.post('//localhost:8000/order', {
+            order
+        }).then(data => {
+            console.log(data.body);
+        }).catch(error => {
+            throw new Error(error.message);
+        });
     }
 
     componentWillReceiveProps(nextProps){
@@ -77,14 +88,31 @@ class OrderPage extends Component {
         })
     }
 
-    onSubmitCustomer(customer){
-        let order = {
-            customer,
-            ...this.props.formValues,
-            auto: this.state.selectedAuto
-        }
+    prepareOrder(order, customer, auto){
+        order.date_range.from = moment(order.date_range.from).set({
+            hour: order.time_from.getHours(),
+            minute: order.time_from.getMinutes()
+        }).format();
 
-        this.sendOrder(order);
+        order.date_range.to = moment(order.date_range.to).set({
+            hour: order.time_to.getHours(),
+            minute: order.time_to.getMinutes()
+        }).format();
+
+        const orderValues = {
+            ...order,
+            customer,
+            auto: auto.id
+        };
+
+        delete orderValues['time_from'];
+        delete orderValues['time_to'];
+
+        return orderValues;
+    }
+
+    onSubmitCustomer(customer){
+        this.sendOrder(this.prepareOrder(this.props.formValues, customer, this.state.selectedAuto));
     }
 
     render() {

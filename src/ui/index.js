@@ -6,7 +6,6 @@ import FieldDateTimeRangePicker from './FieldDateTimeRangePicker';
 class FieldInput extends Component{
     render(){
         const {label, placeholder, type, input, meta: { touched, error, warning}} = this.props;
-
         const inputProps = {
             placeholder: placeholder || label,
             type,
