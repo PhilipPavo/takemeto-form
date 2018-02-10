@@ -46,11 +46,18 @@ class OrderPage extends Component {
             }
         }
 
-        const dateFrom = moment(values.date_range.from),
-                dateTo = moment(values.date_range.to);
+        const dateFrom = moment(values.date_range.from).set({
+            hour: values.time_from.getHours(),
+            minute: values.time_from.getMinutes()
+        });
+
+        const dateTo = moment(values.date_range.to).set({
+            hour: values.time_to.getHours(),
+            minute: values.time_to.getMinutes()
+        });
 
         if(dateFrom.isValid() && dateTo.isValid()){
-            days = Math.abs(dateFrom.diff(dateTo, 'days')) + 1;
+            days = (Math.abs(dateFrom.diff(dateTo, 'days'))) + 1;
         }else{
             days = 1;
         }
@@ -62,7 +69,7 @@ class OrderPage extends Component {
     }
 
     sendOrder(order){
-        Ajax.post('//localhost:8000/order', {
+        Ajax.post('//134.0.112.194:8000/api/order', {
             order
         }).then(data => {
             console.log(data.body);
