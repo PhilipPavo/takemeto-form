@@ -1,5 +1,6 @@
 {
   "name": "takemeto",
+  "homepage": "//takemeto.ru/booking",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

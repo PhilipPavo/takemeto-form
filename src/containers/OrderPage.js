@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {OrderForm, AutoList, CustomerDialog} from '../components/index';
+import {OrderForm, AutoList, CustomerDialog, OrderSuccessDialog} from '../components/index';
 import { getFormValues } from 'redux-form';
 import {connect} from 'react-redux';
 import {ORDER_OPTIONS_ENUM} from "../data";
@@ -11,7 +11,9 @@ class OrderPage extends Component {
         basicPrice: number,
         days: number,
         isOpenCustomerDialog: boolean,
-        selectedAuto: Object
+        selectedAuto: Object,
+        isOpenSuccessDialog: boolean,
+        successDialogContent: string
     }
 
     constructor(props){
@@ -21,7 +23,9 @@ class OrderPage extends Component {
             basicPrice: 0,
             days: 0,
             isOpenCustomerDialog: false,
-            selectedAuto: null
+            selectedAuto: null,
+            isOpenSuccessDialog: false,
+            successDialogContent: ''
         }
     }
 
@@ -73,6 +77,11 @@ class OrderPage extends Component {
             order
         }).then(data => {
             console.log(data.body);
+            this.onCloseCustomerDialog();
+            this.setState({
+                isOpenSuccessDialog: true,
+                successDialogContent: data.body.mail
+            });
         }).catch(error => {
             throw new Error(error.message);
         });
@@ -92,6 +101,13 @@ class OrderPage extends Component {
     onCloseCustomerDialog(){
         this.setState({
             isOpenCustomerDialog: false
+        })
+    }
+
+
+    onCloseSuccessDialog(){
+        this.setState({
+            isOpenSuccessDialog: false
         })
     }
 
@@ -125,6 +141,11 @@ class OrderPage extends Component {
     render() {
         return (
             <React.Fragment>
+                <OrderSuccessDialog
+                    isOpen={this.state.isOpenSuccessDialog}
+                    onClose={() => this.onCloseSuccessDialog()}
+                    content={this.state.successDialogContent}
+                />
                 <CustomerDialog
                     onSubmitCustomer={(values) => this.onSubmitCustomer(values)}
                     isOpen={this.state.isOpenCustomerDialog}
